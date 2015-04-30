@@ -40,7 +40,7 @@ static void ICACHE_FLASH_ATTR  loop(os_event_t *events)
 	}
 
 	//write example output to softuart 2
-	Softuart_Puts(&softuart,"2");
+	Softuart_Puts(&softuart2,"2");
 
 	//some delay until we run this task again
     os_delay_us(100000);
@@ -57,7 +57,6 @@ void ICACHE_FLASH_ATTR  user_init()
     uart_div_modify(0, UART_CLK_FREQ / 9600);
 
 	//init software uart
-	//set pin for rx
 	Softuart_SetPinRx(&softuart,14);	
 	Softuart_SetPinTx(&softuart,12);
 
@@ -66,9 +65,8 @@ void ICACHE_FLASH_ATTR  user_init()
 
 	//second uart
 	//init software uart
-	//set pin for rx
-	Softuart_SetPinRx(&softuart2,5);	
-	Softuart_SetPinTx(&softuart2,4);
+	Softuart_SetPinRx(&softuart2,4);	
+	Softuart_SetPinTx(&softuart2,5);
 
 	//startup
 	Softuart_Init(&softuart2,9600);
