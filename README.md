@@ -9,6 +9,7 @@ If there are any problems, please add issues and pull requests!
 
 1. Download this code
 2. Edit Makefile and change the Paths to your location of the sdk and compiler
+
   ```
   XTENSA_TOOLS_ROOT ?= /home/main/esp8266/esp-open-sdk/xtensa-lx106-elf/bin
   SDK_BASE	?= /home/main/esp8266/esp-open-sdk/sdk
