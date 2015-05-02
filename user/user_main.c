@@ -28,7 +28,7 @@ static void ICACHE_FLASH_ATTR  loop(os_event_t *events)
 	}
 
 	//write example output to softuart 1
-	Softuart_Puts(&softuart,"eins");
+	Softuart_Puts(&softuart,"one");
 
 	//check if character is available at second uart
 	if(Softuart_Available(&softuart2)) {
