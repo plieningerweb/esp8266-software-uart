@@ -23,6 +23,10 @@ typedef struct softuart_buffer_t {
 typedef struct {
 	softuart_pin_t pin_rx;
 	softuart_pin_t pin_tx;
+	//optional rs485 tx enable pin (high -> tx enabled)
+	uint8_t pin_rs485_tx_enable;
+	//wether or not this softuart is rs485 and controlls rs485 tx enable pin
+	uint8_t is_rs485;
 	volatile softuart_buffer_t buffer;
 	uint16_t bit_time;
 } Softuart;

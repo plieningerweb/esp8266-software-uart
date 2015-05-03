@@ -76,8 +76,33 @@ void Softuart_SetPinTx(Softuart *s, uint8_t gpio_id)
 	}
 }
 
+void Softuart_EnableRs485(Softuart *s, uint8_t gpio_id)
+{
+	os_printf("SOFTUART RS485 init\r\n");
+
+	//enable rs485
+	s->is_rs485 = 1;
+
+	//set pin in instance
+	s->pin_rs485_tx_enable = gpio_id;
+
+	//enable pin as gpio
+	PIN_FUNC_SELECT(softuart_reg[gpio_id].gpio_mux_name,softuart_reg[gpio_id].gpio_func); 
+
+	PIN_PULLUP_DIS(softuart_reg[gpio_id].gpio_mux_name);
+	PIN_PULLDWN_DIS(softuart_reg[gpio_id].gpio_mux_name);
+
+	//set low for tx idle (so other bus participants can send)
+	GPIO_OUTPUT_SET(GPIO_ID_PIN(gpio_id), 0);
+	
+	os_printf("SOFTUART RS485 init done\r\n");
+}
+
 void Softuart_Init(Softuart *s, uint16_t baudrate)
 {
+	//disable rs485
+	s->is_rs485 = 0;
+
 	if(! _Softuart_Instances_Count) {
 		os_printf("SOFTUART initialize gpio\r\n");
 		//Initilaize gpio subsystem
@@ -287,6 +312,12 @@ void Softuart_Putchar(Softuart *s, char data)
 	unsigned i;
 	unsigned start_time = 0x7FFFFFFF & system_get_time();
 
+	//if rs485 set tx enable
+	if(s->is_rs485 == 1)
+	{
+		GPIO_OUTPUT_SET(GPIO_ID_PIN(s->pin_rs485_tx_enable), 1);
+	}
+
 	//Start Bit
 	GPIO_OUTPUT_SET(GPIO_ID_PIN(s->pin_tx.gpio_id), 0);
 	for(i = 0; i <= 8; i ++ )
@@ -309,6 +340,12 @@ void Softuart_Putchar(Softuart *s, char data)
 
 	// Delay after byte, for new sync
 	os_delay_us(s->bit_time*6);
+
+	//if rs485 set tx disable 
+	if(s->is_rs485 == 1)
+	{
+		GPIO_OUTPUT_SET(GPIO_ID_PIN(s->pin_rs485_tx_enable), 0);
+	}
 }
 
 void Softuart_Puts(Softuart *s, const char *c )

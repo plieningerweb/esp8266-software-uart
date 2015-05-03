@@ -93,6 +93,42 @@ Softuart_Puts(&softuart2,"two");
 
 ```
 
+## How to use RS485 support
+
+This library can be used to send data over a RS485 interface. To convert the signla, e.g. a MAX485 can be used. The rx and tx of the MAX485 are connected to the rx and tx of the esp8266 softuart pins. The additional pin to enable tx on the MAX485 chip will be connected to another GPIO of the esp82666, e.g. 13. 
+
+Just add this code after the normal initialization:  `Softuart_EnableRs485(&softuart, 13);`
+
+Then every time when the softuart wants to send some characters, it first enables the rs485 send (control pin HIGH) and after the character it will disable it again (control pin LOW).
+
+Example code:
+
+```
+//create global softuart instance
+Softuart softuart;
+
+//in some setup function: 
+  //init first softuart
+  Softuart_SetPinRx(&softuart,14);
+  Softuart_SetPinTx(&softuart,12);
+    
+  //startup
+  Softuart_Init(&softuart,9600);
+
+  //addtional (for RS485)
+  //enable rs485 support
+  //set pin 13 as output to control tx enable/disable of rs485 driver
+  Softuart_EnableRs485(&softuart, 13);
+
+...
+
+//to send a string to softuart one use
+Softuart_Puts(&softuart,"one");
+
+//to send a string to the second softuart use
+Softuart_Puts(&softuart2,"two");
+```
+
 ## Problems / Pull request
 
 Please contribute to this project and add issues / pull requests when you find any problems :)
