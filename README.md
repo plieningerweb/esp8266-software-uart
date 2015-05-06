@@ -1,4 +1,4 @@
-# esp8266-software-uart
+# esp8266 software uart (Software Serial) & RS485 support
 Software UART / Software Serial / SoftUart for ESP8266 to connect more than one UART
 
 This library is very similar to the Arduino SoftSerial. It can be used to connect multiple GPIO's of the ESP8266 to UARTs. 
