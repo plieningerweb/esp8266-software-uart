@@ -24,6 +24,12 @@ If there are any problems, please add issues and pull requests!
 8. connect UART (e.g. of computer) like this: rx -> PIN 5, tx -> PIN 4 and you shoudl see some output like '2222'
 9. start changing the example code
 
+## (Self-) Loopback is not supported!
+
+When you connect a software tx with a software rx (wire from pin tx to pin rx), the rx will not receive the data because of timing issues.
+
+If you use an external tx source, e.g. your computer, then rx will work (at least up to 38400 reliable).
+
 
 ## How to use this code in your project
 
