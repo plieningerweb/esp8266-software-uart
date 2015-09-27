@@ -90,8 +90,7 @@ void Softuart_EnableRs485(Softuart *s, uint8_t gpio_id)
 	PIN_FUNC_SELECT(softuart_reg[gpio_id].gpio_mux_name,softuart_reg[gpio_id].gpio_func); 
 
 	PIN_PULLUP_DIS(softuart_reg[gpio_id].gpio_mux_name);
-	PIN_PULLDWN_DIS(softuart_reg[gpio_id].gpio_mux_name);
-
+	
 	//set low for tx idle (so other bus participants can send)
 	GPIO_OUTPUT_SET(GPIO_ID_PIN(gpio_id), 0);
 	
@@ -122,9 +121,7 @@ void Softuart_Init(Softuart *s, uint16_t baudrate)
 
 		//set pullup (UART idle is VDD)
 		PIN_PULLUP_EN(s->pin_rx.gpio_mux_name);
-		//disable pulldown
-		PIN_PULLDWN_DIS(s->pin_rx.gpio_mux_name);
-
+		
 		//set to input -> disable output
 		GPIO_DIS_OUTPUT(GPIO_ID_PIN(s->pin_rx.gpio_id));
 
@@ -174,9 +171,7 @@ void Softuart_Init(Softuart *s, uint16_t baudrate)
 
 		//set pullup (UART idle is VDD)
 		PIN_PULLUP_EN(s->pin_tx.gpio_mux_name);
-		//disable pulldown
-		PIN_PULLDWN_DIS(s->pin_tx.gpio_mux_name);
-
+		
 		//set high for tx idle
 		GPIO_OUTPUT_SET(GPIO_ID_PIN(s->pin_tx.gpio_id), 1);
 		os_delay_us(100000);
