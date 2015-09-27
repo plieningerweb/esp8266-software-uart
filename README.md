@@ -3,6 +3,12 @@ Software UART / Software Serial / SoftUart for ESP8266 to connect more than one 
 
 This library is very similar to the Arduino SoftSerial. It can be used to connect multiple GPIO's of the ESP8266 to UARTs. 
 
+### Does this work with eps8266 Arudino?
+
+**No**: If you want to use a library for Arduino with ESP8266 (https://github.com/esp8266/Arduino), consider https://github.com/plerup/espsoftwareserial
+
+This library is just a **plain C library**, which you can include in your esp8266 sdk code (or with some modifications even in your Arduino code).
+
 If there are any problems, please add issues and pull requests!
 
 ## How to use this example
