@@ -112,6 +112,24 @@ void Softuart_Init(Softuart *s, uint16_t baudrate)
 	s->bit_time = (1000000 / baudrate);
 	os_printf("SOFTUART bit_time is %d\r\n",s->bit_time);
 
+
+	//init tx pin
+	if(!s->pin_tx.gpio_mux_name) {
+		os_printf("SOFTUART ERROR: Set tx pin (%d)\r\n",s->pin_tx.gpio_mux_name);
+	} else {
+		//enable pin as gpio
+    	PIN_FUNC_SELECT(s->pin_tx.gpio_mux_name, s->pin_tx.gpio_func);
+
+		//set pullup (UART idle is VDD)
+		PIN_PULLUP_EN(s->pin_tx.gpio_mux_name);
+		
+		//set high for tx idle
+		GPIO_OUTPUT_SET(GPIO_ID_PIN(s->pin_tx.gpio_id), 1);
+		os_delay_us(100000);
+		
+		os_printf("SOFTUART TX INIT DONE\r\n");
+	}
+
 	//init rx pin
 	if(!s->pin_rx.gpio_mux_name) {
 		os_printf("SOFTUART ERROR: Set rx pin (%d)\r\n",s->pin_rx.gpio_mux_name);
@@ -160,23 +178,6 @@ void Softuart_Init(Softuart *s, uint16_t baudrate)
 		ETS_GPIO_INTR_ENABLE();
 	
 		os_printf("SOFTUART RX INIT DONE\r\n");
-	}
-
-
-	if(!s->pin_tx.gpio_mux_name) {
-		os_printf("SOFTUART ERROR: Set tx pin (%d)\r\n",s->pin_tx.gpio_mux_name);
-	} else {
-		//enable pin as gpio
-    	PIN_FUNC_SELECT(s->pin_tx.gpio_mux_name, s->pin_tx.gpio_func);
-
-		//set pullup (UART idle is VDD)
-		PIN_PULLUP_EN(s->pin_tx.gpio_mux_name);
-		
-		//set high for tx idle
-		GPIO_OUTPUT_SET(GPIO_ID_PIN(s->pin_tx.gpio_id), 1);
-		os_delay_us(100000);
-		
-		os_printf("SOFTUART TX INIT DONE\r\n");
 	}
 
 	//add instance to array of instances
