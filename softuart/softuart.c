@@ -97,7 +97,7 @@ void Softuart_EnableRs485(Softuart *s, uint8_t gpio_id)
 	os_printf("SOFTUART RS485 init done\r\n");
 }
 
-void Softuart_Init(Softuart *s, uint16_t baudrate)
+void Softuart_Init(Softuart *s, uint32_t baudrate)
 {
 	//disable rs485
 	s->is_rs485 = 0;
@@ -109,8 +109,13 @@ void Softuart_Init(Softuart *s, uint16_t baudrate)
 	}
 
 	//set bit time
-	s->bit_time = (1000000 / baudrate);
-	os_printf("SOFTUART bit_time is %d\r\n",s->bit_time);
+	if(baudrate <= 0) {
+                os_printf("SOFTUART ERROR: Set baud rate (%d)\r\n",baudrate);
+        } else {
+            s->bit_time = (1000000 / baudrate);
+            if ( ((100000000 / baudrate) - (100*s->bit_time)) > 50 ) s->bit_time++;
+            os_printf("SOFTUART bit_time is %d\r\n",s->bit_time);
+        }
 
 
 	//init tx pin
