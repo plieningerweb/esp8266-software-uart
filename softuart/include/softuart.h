@@ -38,6 +38,9 @@ void Softuart_SetPinRx(Softuart *s, uint8_t gpio_id);
 void Softuart_SetPinTx(Softuart *s, uint8_t gpio_id);
 void Softuart_EnableRs485(Softuart *s, uint8_t gpio_id);
 void Softuart_Init(Softuart *s, uint32_t baudrate);
+void Softuart_Putchar(Softuart *s, char data);
+void Softuart_Puts(Softuart *s, const char *c );
+uint8_t Softuart_Readline(Softuart *s, char* Buffer, uint8_t MaxLen );
 
 //define mapping from pin to functio mode
 typedef struct {
