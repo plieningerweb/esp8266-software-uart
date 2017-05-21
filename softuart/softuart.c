@@ -321,7 +321,7 @@ void Softuart_Putchar(Softuart *s, char data)
 
 	//Start Bit
 	GPIO_OUTPUT_SET(GPIO_ID_PIN(s->pin_tx.gpio_id), 0);
-	for(i = 0; i <= 8; i ++ )
+	for(i = 0; i < 8; i ++ )
 	{
 		while ((0x7FFFFFFF & system_get_time()) < (start_time + (s->bit_time*(i+1))))
 		{
