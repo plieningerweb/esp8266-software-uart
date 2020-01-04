@@ -27,7 +27,7 @@ If there are any problems, please add issues and pull requests!
 5. run `make flash`
 6. connect UART (e.g. of computer) to rx and tx of the esp at 9600 baud, you shoud see some dots '...'
 7. connect UART (e.g. of computer) like this: rx -> PIN 12, tx -> PIN 14 and you should see some output like 'oneoneone'
-8. connect UART (e.g. of computer) like this: rx -> PIN 5, tx -> PIN 4 and you shoudl see some output like '2222'
+8. connect UART (e.g. of computer) like this: rx -> PIN 5, tx -> PIN 4 and you should see some output like '2222'
 9. start changing the example code
 
 ## (Self-) Loopback is not supported!
